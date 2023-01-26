@@ -1,0 +1,41 @@
+services:
+
+  app:
+    image: node:18
+    hostname: next
+    build:
+      context: app
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - cache
+    networks:
+      - public
+      - private
+    volumes:
+      - ./app:/usr/src/app
+      - pnpm-cache:/usr/.local/share/pnpm/store
+    environment:
+      XDG_DATA_HOME: /usr/.local/share
+
+  cache:
+    image: redis:7
+    build:
+      context: cache
+      dockerfile: Dockerfile
+    hostname: redis
+    restart: always
+    ports:
+      - 6379:6379
+    networks:
+      - private
+
+
+volumes:
+  pnpm-cache:
+
+networks:
+  public:
+  private:

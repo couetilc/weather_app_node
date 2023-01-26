@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+COMPOSE_FILE="compose.yml"
+APP_URL="http://localhost:3000"
+
+cleanup() {
+  docker compose down
+}
+
+logs() {
+  docker compose logs --follow
+}
+
+preview() {
+    docker compose up --wait
+    while [[ "$(curl -s -o /dev/null -L -w '%{http_code}' ${APP_URL})" != "200" ]];
+    do echo "waiting for app" && sleep 1;
+    done
+    echo 'opening app'
+    open "$APP_URL"
+}
+
+app() {
+  docker compose exec app "$@"
+}
+
+app-run() {
+  docker compose run app "$@"
+}
+
+if [ $# -gt 0 ]; then
+    "$@"
+else
+    echo "Available commands:"
+    declare -F | sed 's/^declare -f /\t/'
+fi
