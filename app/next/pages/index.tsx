@@ -1,11 +1,22 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
+import cardStyles from '@/styles/Card.module.css'
 import Main from '@/components/Main';
 import { Titan_One, Merriweather, Caveat } from '@next/font/google'
+import clsx from 'clsx';
 
-const titanOne = Titan_One({ subsets: ['latin'], weight: ['400'], variable: '--font-family-titan-one' })
-const caveat = Caveat({ subsets: ['latin'], weight: ['700'], variable: '--font-family-caveat' })
+const titanOne = Titan_One({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-family-titan-one'
+})
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  weight: ['700'],
+  variable: '--font-family-caveat'
+})
 
 export default function Home() {
   return (
@@ -16,18 +27,24 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.svg" />
       </Head>
-      <Main className={`layout-flex-column ${titanOne.variable} ${caveat.variable}`}>
-        <div className="sky">
-          <h1 className="home-title titan-one">
-            Forecast it<span className="asterisk">*</span>
+      <Main
+        className={clsx(
+          titanOne.variable,
+          caveat.variable,
+          styles.layout,
+        )}
+      >
+        <div className={styles.sky}>
+          <h1 className={styles.title}>
+            Forecast it<span className={styles.asterisk}>*</span>
           </h1>
-          <i className="home-subtitle">
+          <i className={styles.subtitle}>
             *guaranteed to outperform groundhogs
           </i>
         </div>
 
         <svg
-          className="horizon"
+          className={styles.horizon}
           preserveAspectRatio="none"
           height="100px"
           width="100%"
@@ -42,16 +59,28 @@ export default function Home() {
           />
         </svg>
 
-        <div className="earth">
+        <div className={styles.earth}>
 
           <form
             action="/forecast"
-            className="card variant-brown address-form"
+            className={clsx(
+              cardStyles.card,
+              cardStyles['variant-brown'],
+              styles['address-form']
+            )}
             method="get"
           >
-            <label htmlFor="zip_code">Enter your zip code</label>
-            <input type="text" name="zip_code" pattern="[0-9]{5}"></input>
-            <button type="submit">Forecast</button>
+            <label htmlFor="zip_code">
+              Enter your zip code
+            </label>
+            <input
+              type="text"
+              name="zip_code"
+              pattern="[0-9]{5}"
+            />
+            <button type="submit">
+              Forecast
+            </button>
           </form>
 
         </div>

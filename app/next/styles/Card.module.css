@@ -1,0 +1,19 @@
+.card {
+	--card_accent-color: black;
+	--card_background-color: white;
+	--card_padding: 1rem;
+
+	border-radius: 4px;
+	box-shadow: 0px 4px 8px var(--card_accent-color);
+	border: 2px solid var(--card_accent-color);
+	background: var(--card_background-color);
+	padding: var(--card_padding);
+}
+
+.card.variant-green {
+	--card_accent-color: var(--color_earth);
+}
+
+.card.variant-brown {
+	--card_accent-color: var(--seal-brown);
+}

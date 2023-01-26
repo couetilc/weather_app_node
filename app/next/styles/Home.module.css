@@ -1,4 +1,97 @@
-main {
-  font-family: var(--font-family-merriweather);
-  color: green;
+.layout {
+	display: flex;
+	flex-flow: column nowrap;
+	min-height: 100vh;
+
+	--title_font-size: 96px;
+	--subtitle_font-size: 24px;
+
+	--color_sky: var(--wu-blue);
+	--color_earth: var(--wu-green);
+
+	--proportion_scale: 100;
+	--proportion_sky: 33;
+	--proportion_earth: calc(var(--proportion_scale) - var(--proportion_sky));
+}
+
+.title {
+	font-size: var(--title_font-size);
+	font-family: var(--font-family-titan-one);
+	text-align: center;
+}
+
+.title .asterisk {
+	font-size: calc(var(--title_font-size) * .5);
+	vertical-align: top;
+	position: absolute;
+}
+
+.subtitle {
+	font-size: var(--subtitle_font-size);
+	font-family: var(--font-family-caveat);
+	font-weight: 700;
+	text-align: center;
+}
+
+.sky {
+	background: var(--wu-blue);
+	flex: var(--proportion_sky) 0 33%;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.earth {
+	background: var(--wu-green);
+	flex: var(--proportion_earth) 0 66%;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.earth form {
+	display: flex;
+	flex-flow: column nowrap;
+	gap: 8px;
+	align-items: stretch;
+	text-align: center;
+
+	transform: translateY(-50%);
+}
+
+.horizon {
+	height: 100px;
+	background: var(--color_sky);
+}
+
+.horizon path {
+	fill: var(--color_earth);
+}
+
+.address-form label {
+	font-size: 20px;
+}
+
+.address-form input {
+	border-radius: 4px;
+	text-align: center;
+	border-image: none;
+	border: 1px solid var(--card_accent-color);
+	font-family: inherit;
+	font-size: inherit;
+}
+
+.address-form button {
+	border-radius: 4px;
+	border: 1px solid var(--card_accent-color);
+	background: var(--card_accent-color);
+	color: var(--card_background-color);
+	font-family: inherit;
+	font-size: inherit;
+}
+
+.address-form button:hover {
+	cursor: pointer;
 }

@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 import { Merriweather } from '@next/font/google'
+import styles from './component.module.css';
+import clsx from 'clsx';
 
 const merriweather = Merriweather({
   subsets: ['latin'],
@@ -9,7 +11,13 @@ const merriweather = Merriweather({
 
 function Main(props: { className: string, children: ReactNode }) {
   return (
-    <main className={`${props.className} ${merriweather.variable}`}>
+    <main
+      className={clsx(
+        props.className,
+        styles['component-main'],
+        merriweather.variable
+      )}
+    >
       {props.children}
     </main>
   );

@@ -3,3 +3,12 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
 }
+
+:root {
+	--wu-green: #5a9f49;
+	--wu-blue: #17aadc;
+	--seal-brown: #591F0A;
+
+	--color_error-border: #ff0000;
+	--color_error-background: #db5454;
+}
