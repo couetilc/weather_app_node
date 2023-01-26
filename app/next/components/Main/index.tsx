@@ -9,7 +9,7 @@ const merriweather = Merriweather({
   variable: '--font-family-merriweather'
 });
 
-function Main(props: { className: string, children: ReactNode }) {
+function Main(props: { className?: string, children?: ReactNode }) {
   return (
     <main
       className={clsx(
