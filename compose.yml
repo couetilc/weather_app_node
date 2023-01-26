@@ -15,7 +15,7 @@ services:
       - public
       - private
     volumes:
-      - ./app:/usr/src/app
+      - ./app/next:/usr/src/app
       - pnpm-cache:/usr/.local/share/pnpm/store
     environment:
       XDG_DATA_HOME: /usr/.local/share

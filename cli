@@ -20,6 +20,10 @@ preview() {
     open "$APP_URL"
 }
 
+dev() {
+  docker compose run -p "3000:3000" app pnpm dev
+}
+
 app() {
   docker compose exec app "$@"
 }
