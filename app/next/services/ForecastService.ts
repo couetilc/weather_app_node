@@ -11,15 +11,13 @@ export default class ForecastService {
   }
 
   async call() {
-    this.isCached = false;
+    this.isCached = true;
 
     try {
-      const cached = await get(this.zipCode)
-
-      console.log({ cached });
+      const cached = await get(this.cacheKey)
 
       if (cached) {
-        return cached
+        return JSON.parse(cached);
       } 
 
       const geoApiResponse = await fetch(
@@ -41,12 +39,26 @@ export default class ForecastService {
         ].join('&')}`
       ).then(res => res.json());
 
-      await set(this.zipCode, JSON.stringify(weatherApiResponse));
+      await set(
+        this.cacheKey,
+        JSON.stringify(weatherApiResponse),
+        this.cacheOptions
+      );
+
+      this.isCached = false;
 
       return weatherApiResponse;
     }
     catch (e) {
       return {};
     }
+  }
+
+  get cacheKey() {
+    return `zip:${this.zipCode}`;
+  }
+
+  get cacheOptions() {
+    return { EX: 30 * 60 };
   }
 }

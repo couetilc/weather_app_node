@@ -22,30 +22,29 @@ export default function Forecast(props: ForecastComponentProps) {
         <title>{`Forecast ${props.zipCode}`}</title>
         <meta name="description" content={`weather forecast for zip code ${props.zipCode}`} />
       </Head>
+
       <header>
         <nav><Link href="/">Forecast it</Link></nav>
       </header>
+
       <Main className={styles.layout}>
 				<article className="card variant-green weather-current">
 					<h1>
 					{"Today's"} <br /> Weather
 					</h1>
-					<pre>
-					{JSON.stringify(props.forecast, null, 2)}
-					</pre>
-					{/*
+
 					<section className="temperatures">
 						<div className="temperature-current">
 							<span>Temp (°F)</span>
-							<%= current_temp %>°
+							{forecast.currentTemp}°
 						</div>
 						<div className="temperature-max">
 							<span>High</span>
-							<%= current_temp_max %>°
+							{forecast.currentTempMax}°
 						</div>
 						<div className="temperature-min">
 							<span>Low</span>
-							<%= current_temp_min %>°
+							{forecast.currentTempMin}°
 						</div>
 					</section>
 				</article>
@@ -53,21 +52,22 @@ export default function Forecast(props: ForecastComponentProps) {
 				<article className="card variant-green weather-metadata">
 					<div className="metadata-item item-zip">
 						<span>Zip Code</span>
-						<%= zip_code %>
+						{props.zipCode}
 					</div>
 					<div className="metadata-item item-tz">
 						<span>Timezone</span>
-						<%= current_timezone %>
+						{forecast.currentTimezone}
 					</div>
 					<div className="metadata-item item-time">
 						<span>Updated at</span>
-						<%= current_time %>
+						{forecast.currentTime}
 					</div>
 					<div className="metadata-item item-cache">
 						<span>Cache Status</span>
-						<%= cache_status %>
+						{props.isCached ? "Hit" : "Miss"}
 					</div>
 				</article>
+					{/*
 
 				<article className="card variant-green weather-extended">
 					<h2>Extended Forecast</h2>
@@ -128,8 +128,8 @@ export default function Forecast(props: ForecastComponentProps) {
 						</table>
 					<% end %>
 					<% end %>
-				*/}
 				</article>
+				*/}
 
       </Main>
     </>

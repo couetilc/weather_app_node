@@ -1,3 +1,5 @@
+import { zonedTimeToUtc, utcToZonedTime, format } from 'date-fns-tz';
+
 export default class ForecastData {
 
   forecast: any
@@ -7,33 +9,25 @@ export default class ForecastData {
   }
 
   get currentTemp() {
-    return '';
+    return this.forecast.current_weather.temperature;
   }
 
   get currentTempMax() {
-    return '';
+    return this.forecast.daily.temperature_2m_max[0];
   }
 
   get currentTempMin() {
-    return '';
-  }
-
-  get zipCode() {
-    return '';
+    return this.forecast.daily.temperature_2m_min[0];
   }
 
   get currentTimezone() {
-    return '';
+    return this.forecast.timezone;
   }
 
   get currentTime() {
-    return '';
-  }
-
-  get cacheStatus() {
-    // this one might be outside this helper, it doesn't come from forecast
-    // data, it comes from the api endpoint handler
-    return '';
+    const date = zonedTimeToUtc(this.forecast.current_weather.time, this.currentTimezone);
+    const zonedDate = utcToZonedTime(date, this.currentTimezone);
+    return format(zonedDate, "PPpp", { timeZone: this.currentTimezone });
   }
 
 }
