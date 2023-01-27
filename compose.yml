@@ -19,6 +19,7 @@ services:
       - pnpm-cache:/usr/.local/share/pnpm/store
     environment:
       XDG_DATA_HOME: /usr/.local/share
+      REDIS_URL: "redis://:redispassword@redis:6379/0"
 
   cache:
     image: redis:7
