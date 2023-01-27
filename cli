@@ -12,7 +12,7 @@ logs() {
 }
 
 preview() {
-    docker compose up --wait
+    docker compose up --build --wait
     while [[ "$(curl -s -o /dev/null -L -w '%{http_code}' ${APP_URL})" != "200" ]];
     do echo "waiting for app" && sleep 1;
     done

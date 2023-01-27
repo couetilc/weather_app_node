@@ -1,4 +1,4 @@
-import { FormEvent, useCallback } from 'react';
+import { FormEvent, useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head'
 import Image from 'next/image'
@@ -8,20 +8,27 @@ import Main from '@/components/Main';
 import clsx from 'clsx';
 import titanOne from '@/fonts/TitanOneRegular';
 import caveat from '@/fonts/CaveatBold';
+import useIsPageNavigating from '@/hooks/useIsPageNavigating';
 
 export default function Home() {
 
   const router = useRouter();
+  const isNavigating = useIsPageNavigating();
 
   const onSubmitForecast = useCallback((e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (e.target instanceof HTMLFormElement) {
+
       const searchParams = new URLSearchParams();
+
       for (let [key, value] of new FormData(e.target)) {
         searchParams.append(key, String(value));
       }
+
       const url = new URL(e.target.action, window.location.href);
       url.search = searchParams.toString();
+
       router.push(url.pathname + url.search + url.hash);
     }
   }, [router]);
@@ -84,8 +91,8 @@ export default function Home() {
               name="zip_code"
               pattern="[0-9]{5}"
             />
-            <button type="submit">
-              Forecast
+            <button type="submit" disabled={isNavigating}>
+              { isNavigating ? 'Forecasting...' : 'Forecast' }
             </button>
           </form>
 
