@@ -11,7 +11,7 @@
 }
 
 .card.variant-green {
-	--card_accent-color: var(--color_earth);
+	--card_accent-color: var(--wu-green);
 }
 
 .card.variant-brown {

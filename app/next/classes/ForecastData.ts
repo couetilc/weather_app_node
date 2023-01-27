@@ -44,4 +44,8 @@ export default class ForecastData {
     return utcToZonedTime(this.utcDate, this.currentTimezone);
   }
 
+  zonedTimeToUtc(time: string) {
+    return zonedTimeToUtc(time, this.currentTimezone); 
+  }
+
 }

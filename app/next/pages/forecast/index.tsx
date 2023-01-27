@@ -12,6 +12,7 @@ import range from '@/utils/range';
 import { add } from 'date-fns';
 import titanOne from '@/fonts/TitanOneRegular';
 import clsx from 'clsx';
+import cardStyles from '@/styles/Card.module.css';
 
 export default function Forecast(props: ForecastComponentProps) {
 
@@ -32,52 +33,76 @@ export default function Forecast(props: ForecastComponentProps) {
       </header>
 
       <Main className={styles.layout}>
-				<article className="card variant-green weather-current">
+				<article
+					className={clsx(
+						cardStyles.card,
+						cardStyles['variant-green'],
+						styles['weather-current']
+					)}
+				>
 					<h1>
-					{"Today's"} <br /> Weather
+						{"Today's"} <br /> Weather
 					</h1>
 
-					<section className="temperatures">
-						<div className="temperature-current">
+					<section className={styles.temperatures}>
+						<div className={styles['temperature-current']}>
 							<span>Temp (°F)</span>
 							{forecast.currentTemp}°
 						</div>
-						<div className="temperature-max">
+						<div className={styles['temperature-max']}>
 							<span>High</span>
 							{forecast.currentTempMax}°
 						</div>
-						<div className="temperature-min">
+						<div className={styles['temperature-min']}>
 							<span>Low</span>
 							{forecast.currentTempMin}°
 						</div>
 					</section>
 				</article>
 
-				<article className="card variant-green weather-metadata">
-					<div className="metadata-item item-zip">
+				<article
+					className={clsx(
+						cardStyles.card,
+						cardStyles['variant-green'],
+						styles['weather-metadata']
+					)}
+				>
+					<div
+						className={clsx(styles['metadata-item'], styles['item-zip'])}
+					>
 						<span>Zip Code</span>
 						{props.zipCode}
 					</div>
-					<div className="metadata-item item-tz">
+					<div className={clsx(styles['metadata-item'], styles['item-tz'])}>
 						<span>Timezone</span>
 						{forecast.currentTimezone}
 					</div>
-					<div className="metadata-item item-time">
+					<div className={clsx(styles['metadata-item'], styles['item-time'])}>
 						<span>Updated at</span>
 						{forecast.currentTime}
 					</div>
-					<div className="metadata-item item-cache">
+					<div className={clsx(styles['metadata-item'], styles['item-cache'])}>
 						<span>Cache Status</span>
 						{props.isCached ? "Hit" : "Miss"}
 					</div>
 				</article>
 
-				<article className="card variant-green weather-extended">
+				<article
+					className={clsx(
+						cardStyles.card,
+						cardStyles['variant-green'],
+						styles['weather-extended']
+					)}
+				>
 					<h2>Extended Forecast</h2>
 
 					{range({ min: 0, max: 7 }).map(dayOffset => {
 						return (
-							<table key={dayOffset} className="forecast-day" data-day={dayOffset}>
+							<table
+								key={dayOffset}
+								className={styles['forecast-day']}
+								data-day={dayOffset}
+							>
 								<caption>Day {dayOffset + 1}</caption>
 								<thead>
 									<tr>
@@ -102,20 +127,20 @@ export default function Forecast(props: ForecastComponentProps) {
 									return (
 										<tr key={dayPeriod[0]}>
 											<th scope="row">
-												<span className="period-label">
+												<span className={styles['period-label']}>
 													{dayPeriod[0]}
 												</span>
-												<span className="period-offset">
+												<span className={styles['period-offset']}>
 													+{dayPeriod[1]}
 												</span>
 											</th>
 											{range({ min: 0, max: 7 }).map(hourOffset => {
 												const hourlyCursor = dayOffset * 24 + periodIndex * 6 + hourOffset;
-												const moment_date = forecast.utcDate;
-												const now = new Date();
-												const moment = now < moment_date
+												const momentDate = forecast.zonedTimeToUtc(forecast.hourlyTime[hourlyCursor]);
+												const nowDate = new Date();
+												const moment = nowDate < momentDate
 													? "past"
-													: now < add(moment_date, { hours: 1 })
+													: nowDate < add(momentDate, { hours: 1 })
 														? "present"
 														: "future"
 													;

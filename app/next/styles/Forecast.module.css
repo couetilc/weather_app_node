@@ -8,6 +8,8 @@
 	flex-flow: row wrap;
 	align-items: flex-start;
 	gap: 1rem;
+
+	background: var(--wu-blue);
 }
 
 .header {
@@ -24,3 +26,150 @@
 	text-decoration: none;
 	appearance: none;
 }
+
+.weather-current {
+	display: flex;
+	flex-flow: row nowrap;
+	gap: 2rem;
+	align-items: center;
+}
+
+.weather-current h1 {
+	text-align: center;
+	line-height: 1.5;
+}
+
+.temperatures {
+	display: grid;
+	grid-template:
+		"temp temp" 2fr
+		"high low" 1fr
+		/ 1fr 1fr
+	;
+	grid-gap: .25rem;
+}
+
+.temperatures > * {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	justify-content: center;
+	gap: .25rem;
+}
+
+.temperatures span {
+	font-size: .5rem;
+}
+
+
+.temperatures .temperature-current {
+	grid-area: temp;
+	font-size: 2rem;
+}
+
+.temperatures .temperature-current span {
+	font-size: .625rem;
+}
+
+.temperatures .temperature-max {
+	grid-area: high;
+}
+
+.temperatures .temperature-min {
+	grid-area: low;
+}
+
+.temperature-max, .temperature-min {
+	font-size: .875rem;
+}
+
+.weather-metadata {
+	display: grid;
+	grid-template:
+		"zip tz" 1fr
+		"time cache" 1fr
+		/ 1fr 1fr
+	;
+	grid-template:
+		"zip" auto
+		"tz" auto
+		"time" auto
+		"cache" auto
+		/ 1fr;
+	grid-gap: .625rem;
+}
+
+.weather-metadata .metadata-item {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	text-align: center;
+}
+
+.metadata-item span {
+	font-size: .625rem;
+	line-height: 1.5;
+}
+
+.metadata-item.item-zip {
+	grid-area: zip;
+}
+
+.metadata-item.item-tz {
+	grid-area: tz;
+}
+
+.metadata-item.item-time {
+	grid-area: time;
+}
+
+.metadata-item.item-cache {
+	grid-area: cache;
+}
+
+.weather-extended {
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	gap: 1rem;
+}
+
+.forecast-day td, .forecast-day th {
+	padding: .325rem;
+}
+
+.forecast-day td {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.forecast-day th[scope="row"] {
+	text-align: center;
+	vertical-align: middle;
+	font-size: .625rem;
+}
+
+.forecast-day:not([data-day="0"]) th[scope="row"] .period-label {
+	display: none;
+}
+
+.forecast-day th[scope="col"] {
+	text-align: center;
+	vertical-align: bottom;
+	font-size: .625rem;
+}
+
+.forecast-day td[data-moment="present"] {
+	background: lightgreen;
+	position: relative;
+}
+
+.forecast-day td[data-moment="present"]::before {
+	content: "NOW";
+	font-size: .5rem;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: .125em;
+}
+
