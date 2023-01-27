@@ -25,9 +25,23 @@ export default class ForecastData {
   }
 
   get currentTime() {
-    const date = zonedTimeToUtc(this.forecast.current_weather.time, this.currentTimezone);
-    const zonedDate = utcToZonedTime(date, this.currentTimezone);
-    return format(zonedDate, "PPpp", { timeZone: this.currentTimezone });
+    return format(this.zonedDate, "PPpp", { timeZone: this.currentTimezone });
+  }
+
+  get hourlyTime() {
+    return this.forecast.hourly.time;
+  }
+
+  get hourlyTemperature() {
+    return this.forecast.hourly.temperature_2m;
+  }
+
+  get utcDate() {
+    return zonedTimeToUtc(this.forecast.current_weather.time, this.currentTimezone); 
+  }
+
+  get zonedDate() {
+    return utcToZonedTime(this.utcDate, this.currentTimezone);
   }
 
 }

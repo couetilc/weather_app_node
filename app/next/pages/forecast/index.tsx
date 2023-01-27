@@ -8,6 +8,10 @@ import styles from '@/styles/Forecast.module.css';
 import ForecastData from '@/classes/ForecastData';
 import { get, set } from '@/utils/redis';
 import ForecastService from '@/services/ForecastService';
+import range from '@/utils/range';
+import { add } from 'date-fns';
+import titanOne from '@/fonts/TitanOneRegular';
+import clsx from 'clsx';
 
 export default function Forecast(props: ForecastComponentProps) {
 
@@ -23,7 +27,7 @@ export default function Forecast(props: ForecastComponentProps) {
         <meta name="description" content={`weather forecast for zip code ${props.zipCode}`} />
       </Head>
 
-      <header>
+      <header className={clsx(styles.header, titanOne.variable)}>
         <nav><Link href="/">Forecast it</Link></nav>
       </header>
 
@@ -67,69 +71,68 @@ export default function Forecast(props: ForecastComponentProps) {
 						{props.isCached ? "Hit" : "Miss"}
 					</div>
 				</article>
-					{/*
 
 				<article className="card variant-green weather-extended">
 					<h2>Extended Forecast</h2>
 
-					<% Time.use_zone(current_timezone) do %>
-
-					<% (0...7).each do |day_offset| %>
-						<table className="forecast-day" data-day="<%= day_offset %>">
-							<caption>Day <%= day_offset + 1 %></caption>
-							<thead>
-								<tr>
-									<th scope="col">
-									</th>
-									<% (0...6).each do |hour_offset| %>
-										<th scope="col">
-											+<%= hour_offset %>
-										</th>
-									<% end %>
-								</tr>
-							</thead>
-							<tbody>
-								<% [
-										["Night", "00:00"],
-										["Morning", "06:00"],
-										["Afternoon", "12:00"],
-										["Evening", "18:00"],
-									].each_with_index do |day_period, period_index| %>
+					{range({ min: 0, max: 7 }).map(dayOffset => {
+						return (
+							<table key={dayOffset} className="forecast-day" data-day={dayOffset}>
+								<caption>Day {dayOffset + 1}</caption>
+								<thead>
 									<tr>
-										<th scope="row">
-											<span className="period-label">
-											<%= day_period[0] %>
-											</span>
-											<span className="period-offset">
-											+<%= day_period[1] %>
-											</span>
+										<th scope="col">
 										</th>
-										<% (0...6).each do |hour_offset| %>
-											<% hourly_cursor = day_offset * 24 + period_index * 6 + hour_offset %>
-											<td
-												data-moment="<%=
-													moment = ActiveSupport::TimeZone.new(current_timezone).parse(hourly_time[hourly_cursor])
-													now = Time.current
-													if now < moment
-														"past"
-													elsif now < (moment + 1.hour)
-														"present"
-													else
-														"future"
-													end
-												%>"
-											>
-												<%= hourly_temperature[hourly_cursor] %>°
-											</td>
-										<% end %>
+										{range({ min: 0, max: 7 }).map(hourOffset => {
+											return (
+												<th key={hourOffset} scope="col">
+													+{hourOffset}
+												</th>
+											);
+										})}
 									</tr>
-								<% end %>
-							</tbody>
-						</table>
-					<% end %>
-					<% end %>
+								</thead>
+								<tbody>
+								{[
+									["Night", "00:00"],
+									["Morning", "06:00"],
+									["Afternoon", "12:00"],
+									["Evening", "18:00"],
+								].map((dayPeriod, periodIndex) => {
+									return (
+										<tr key={dayPeriod[0]}>
+											<th scope="row">
+												<span className="period-label">
+													{dayPeriod[0]}
+												</span>
+												<span className="period-offset">
+													+{dayPeriod[1]}
+												</span>
+											</th>
+											{range({ min: 0, max: 7 }).map(hourOffset => {
+												const hourlyCursor = dayOffset * 24 + periodIndex * 6 + hourOffset;
+												const moment_date = forecast.utcDate;
+												const now = new Date();
+												const moment = now < moment_date
+													? "past"
+													: now < add(moment_date, { hours: 1 })
+														? "present"
+														: "future"
+													;
+												return (
+													<td key={hourlyCursor} data-moment={moment}>
+														{forecast.hourlyTemperature[hourlyCursor]}°
+													</td>
+												);
+											})}
+										</tr>
+									);
+								})}
+								</tbody>
+							</table>
+						);
+					})}
 				</article>
-				*/}
 
       </Main>
     </>

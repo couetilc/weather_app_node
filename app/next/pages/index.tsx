@@ -5,20 +5,9 @@ import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
 import cardStyles from '@/styles/Card.module.css'
 import Main from '@/components/Main';
-import { Titan_One, Merriweather, Caveat } from '@next/font/google'
 import clsx from 'clsx';
-
-const titanOne = Titan_One({
-  subsets: ['latin'],
-  weight: ['400'],
-  variable: '--font-family-titan-one'
-})
-
-const caveat = Caveat({
-  subsets: ['latin'],
-  weight: ['700'],
-  variable: '--font-family-caveat'
-})
+import titanOne from '@/fonts/TitanOneRegular';
+import caveat from '@/fonts/CaveatBold';
 
 export default function Home() {
 
